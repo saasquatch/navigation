@@ -5,6 +5,8 @@ jobs:
   test:
     timeout-minutes: 15
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.38.0-jammy
     env:
       NO_COVERAGE_BADGE_UPDATE: 1
       FLAGS: FETCH_SERVICE_DISABLE,POST_CONFIGURE_TEST,PLAYWRIGHT,CONTINUE_ON_ERROR,SPEC_BROWSER
@@ -22,7 +24,6 @@ jobs:
       - run: |
           yarn remove wpt
           yarn install
-          npx playwright install-deps
       - run: yarn build
       # yarn coverage === c8 + yarn test
       - run: yarn coverage

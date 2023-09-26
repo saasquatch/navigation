@@ -4,6 +4,8 @@ on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.38.0-jammy
     env:
       NO_COVERAGE_BADGE_UPDATE: 1
       FLAGS: FETCH_SERVICE_DISABLE,POST_CONFIGURE_TEST,WEB_PLATFORM_TESTS,CONTINUE_ON_ERROR
@@ -18,7 +20,6 @@ jobs:
       - run: |
           yarn install
           yarn add --dev https://github.com/web-platform-tests/wpt.git
-          npx playwright install-deps
       - run: yarn build
       - run: yarn test:node
         continue-on-error: true

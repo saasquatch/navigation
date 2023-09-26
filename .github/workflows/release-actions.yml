@@ -9,6 +9,8 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.38.0-jammy
     env:
       NO_COVERAGE_BADGE_UPDATE: 1
       FLAGS: FETCH_SERVICE_DISABLE,POST_CONFIGURE_TEST
@@ -26,7 +28,6 @@ jobs:
       - uses: antongolub/action-setup-bun@v1
       - run: |
           yarn install
-          npx playwright install-deps
       - run: yarn build
       # yarn coverage === c8 + yarn test
       - run: yarn coverage
